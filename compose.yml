@@ -1,0 +1,17 @@
+services:
+  ruby:
+    build:
+      context: .
+      args:
+        - USERNAME=${USERNAME}
+        - GROUPNAME=${GROUPNAME}
+        - UID=${UID}
+        - GID=${GID}
+    command: /bin/sh
+    ports:
+      - "3000:3000"
+    volumes:
+      - ./:/workspace
+    user: "${UID}:${GID}"
+    tty: true
+
