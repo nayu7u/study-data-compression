@@ -13,8 +13,19 @@ class BurrowsWheelerTransform
   def decode(data, n)
     splited = data.split('')
     sorted = splited.sort
+    indices = splited.size.times.map(&:to_i)
+    ziped = splited.zip(sorted, indices)
+    sorted_indices = ziped.sort.map(&:last)
+
+    index = n - 1
+    decoded = []
+    sorted_indices.size.times.map {
+      target = sorted_indices[index]
+      decoded << data[target]
+      index = target
+    }
+
+    decoded
   end
 end
 
-p BurrowsWheelerTransform.new.encode('cacao')
-p BurrowsWheelerTransform.new.decode('cacao', 3)
