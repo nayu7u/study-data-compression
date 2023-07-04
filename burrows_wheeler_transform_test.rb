@@ -13,5 +13,9 @@ class BurrowsWheelerTransformTest < Minitest::Test
   def test_decode
     assert_equal "cacao", @bwt.decode("ccoaa", 2)
   end
+
+  def test_encode_decode
+    assert_equal "Hello, world!", @bwt.decode(*@bwt.encode("Hello, world!"))
+  end
 end
 
