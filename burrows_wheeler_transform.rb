@@ -17,15 +17,15 @@ class BurrowsWheelerTransform
     ziped = splited.zip(sorted, indices)
     sorted_indices = ziped.sort.map(&:last)
 
-    index = n - 1
+    index = n
     decoded = []
-    sorted_indices.size.times.map {
+    sorted_indices.size.times.each {
       target = sorted_indices[index]
       decoded << data[target]
       index = target
     }
 
-    decoded
+    decoded.join
   end
 end
 
