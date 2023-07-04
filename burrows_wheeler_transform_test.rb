@@ -23,5 +23,9 @@ class BurrowsWheelerTransformTest < Minitest::Test
     random_bytes = SecureRandom.random_bytes(100)
     assert_equal random_bytes, @bwt.decode(*@bwt.encode(random_bytes))
   end
+
+  def test_alyways_failure
+    assert_equal true, false
+  end
 end
 
