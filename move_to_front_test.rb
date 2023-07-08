@@ -11,6 +11,6 @@ class MoveToFrontTest < Minitest::Test
   end
 
   def test_decode
-    assert_equal "ababacaca", @mtf.encode("ab111c111")
+    assert_equal "ababacaca", @mtf.decode("ab111c111")
   end
 end
