@@ -19,5 +19,22 @@ class MoveToFront
   end
 
   def decode(data)
+    table = []
+    decoded = ""
+
+    data.split("") do |char|
+      if char =~ /[0-9]/
+        char_index = char.to_i
+        table_char = table[char_index]
+        decoded << table_char
+        table.delete_at(char_index)
+        table.insert(0, table_char)
+      else
+        decoded << char
+        table.insert(0, char)
+      end
+    end
+
+    decoded
   end
 end
