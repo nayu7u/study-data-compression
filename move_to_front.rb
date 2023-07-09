@@ -1,38 +1,26 @@
 class MoveToFront
   def encode(data)
-    table = []
-    encoded = ""
+    symbol_list = data.bytes.uniq
+    symbol_list_clone = symbol_list.dup
+    encoded = []
 
-    data.split("") do |char|
-      char_index = table.find_index(char)
-      if char_index.nil?
-        table.insert(0, char)
-        encoded << char 
-      else
-        table.delete_at(char_index)
-        table.insert(0, char)
-        encoded << char_index.to_s
-      end
+    data.each_byte do |b|
+      encoded << symbol_list.find_index(b)
+      symbol_list.delete(b)
+      symbol_list.insert(0, b)
     end
 
-    encoded
+    [symbol_list_clone, encoded]
   end
 
-  def decode(data)
-    table = []
+  def decode(symbol_list, encoded)
     decoded = ""
 
-    data.split("") do |char|
-      if char =~ /[0-9]/
-        char_index = char.to_i
-        table_char = table[char_index]
-        decoded << table_char
-        table.delete_at(char_index)
-        table.insert(0, table_char)
-      else
-        decoded << char
-        table.insert(0, char)
-      end
+    encoded.each do |index|
+      byte = symbol_list[index]
+      decoded << byte
+      symbol_list.delete(byte)
+      symbol_list.insert(0, byte)
     end
 
     decoded
