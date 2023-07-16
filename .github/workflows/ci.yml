@@ -18,4 +18,6 @@ jobs:
 
       - name: Run test
         run: ruby test/burrows_wheeler_transform_test.rb
+
+      - name: Run test
         run: ruby test/move_to_front_test.rb
