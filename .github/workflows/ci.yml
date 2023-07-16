@@ -17,4 +17,5 @@ jobs:
           ruby-version: 3.2.2
 
       - name: Run test
-        run: ruby burrows_wheeler_transform_test.rb
+        run: ruby test/burrows_wheeler_transform_test.rb
+        run: ruby test/move_to_front_test.rb
