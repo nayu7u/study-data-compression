@@ -17,4 +17,8 @@ jobs:
           ruby-version: 3.2.2
 
       - name: Run test
+<<<<<<< Updated upstream
         run: ruby burrows_wheeler_transform_test.rb
+=======
+        run: rake
+>>>>>>> Stashed changes
