@@ -1,5 +1,6 @@
 require "minitest/autorun"
 require_relative "../move_to_front.rb"
+require "securerandom"
 
 class MoveToFrontTest < Minitest::Test
   def setup
@@ -7,26 +8,15 @@ class MoveToFrontTest < Minitest::Test
   end
 
   def test_encode1
-    assert_equal [[97], [0]], @mtf.encode("a")
-  end
-
-  def test_encode2
-    assert_equal [[97, 98], [0, 0, 1, 0]], @mtf.encode("aabb")
+    assert_equal [0, 1, 0, 2], @mtf.encode([0, 0, 1, 2])
   end
 
   def test_decode1
-    assert_equal "a", @mtf.decode([97], [0])
-  end
-
-  def test_decode2
-    assert_equal "aabb", @mtf.decode([97, 98], [0, 0, 1, 0])
+    assert_equal [0, 0, 1, 2], @mtf.decode([0, 1, 0, 2])
   end
 
   def test_encode_decode
-    assert_equal "ababacaca", @mtf.decode(*@mtf.encode("ababacaca"))
-  end
-
-  def test_encode_decode_include_number
-    assert_equal "1a1ba11bacaca", @mtf.decode(*@mtf.encode("1a1ba11bacaca"))
+    random_bytes = SecureRandom.random_bytes(100).bytes
+    assert_equal random_bytes, @mtf.decode(*@mtf.encode(random_bytes))
   end
 end
