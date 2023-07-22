@@ -11,16 +11,28 @@ class Main
     @hc = HuffmanCoding.new
   end
 
-  def encode(data)
-    # bwt_sorted, index = @bwt.encode(data)
-    # mtf_sorted = @mtf.encode(bwt_sorted)
-    # @rle.encode()
-    # @hc.encode()
-    data
+  def encode(bytes)
+    bwt_encoed, index = @bwt.encode(bytes)
+    mtf_encoded = @mtf.encode(bwt_encoed)
+    [index, mtf_encoded]
   end
 
-  def decode(data)
-    data
+  def decode(bytes)
+    index, mtf_encoded = bytes
+    bwt_encoded = @mtf.decode(mtf_encoded)
+    bytes = @bwt.decode(bwt_encoded, index)
+  end
+
+  def encode_from_file(source_path, encoded_path)
+    bytes = File.open(source_path, "rb") { _1.read.bytes }
+    encoded = encode(bytes)
+    File.open(encoded_path, "wb") { |f| encoded.each{ f.putc(_1) } }
+  end
+
+  def decode_from_file(encoded_path, decoded_path)
+    bytes = File.open(encoded_path, "rb") { _1.read.bytes }
+    decoded = decode(bytes)
+    File.open(encoded_path, "wb") { |f| decoded.each{ f.putc(_1) } }
   end
 end
 

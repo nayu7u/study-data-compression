@@ -1,31 +1,28 @@
 class BurrowsWheelerTransform
-  def encode(data)
-    splited = data.split('')
-
-    matrix = splited
+  def encode(bytes)
+    matrix = bytes
       .size
       .times
-      .inject([]) { |r, i| r << splited.rotate(0-i) }
+      .inject([]) { |r, i| r << bytes.rotate(0-i) }
 
-    [matrix.sort.map(&:last).join, matrix.sort.find_index(splited)]
+    [matrix.sort.map(&:last), matrix.sort.find_index(bytes)]
   end
 
-  def decode(data, n)
-    splited = data.split('')
-    sorted = splited.sort
-    indices = splited.size.times.map(&:to_i)
-    ziped = splited.zip(sorted, indices)
+  def decode(bytes, n)
+    sorted = bytes.sort
+    indices = bytes.size.times.map(&:to_i)
+    ziped = bytes.zip(sorted, indices)
     sorted_indices = ziped.sort.map(&:last)
 
     index = n
     decoded = []
     sorted_indices.size.times.each {
       target = sorted_indices[index]
-      decoded << data[target]
+      decoded << bytes[target]
       index = target
     }
 
-    decoded.join
+    decoded
   end
 end
 
