@@ -9,7 +9,6 @@ class MainTest < Minitest::Test
 
   def test_encode_decode
     random_bytes = SecureRandom.random_bytes(100)
-    puts random_bytes
     assert_equal random_bytes, @main.decode(@main.encode(random_bytes))
   end
 end
