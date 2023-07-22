@@ -1,5 +1,7 @@
 class HuffmanCoding
-  def initialize(data:)
-    @data = data
+  def encode
+  end
+
+  def decode
   end
 end
