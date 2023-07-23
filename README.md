@@ -17,4 +17,8 @@ Docker内で実行する場合
 ```bash
 docker compose up -d
 docker compose exec ruby /bin/bash
+
+# 圧縮
+docker compose exec ruby ./compress source_path destination_path
+docker compose exec ruby ./decompress source_path destination_path
 ```
