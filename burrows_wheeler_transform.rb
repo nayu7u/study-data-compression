@@ -1,11 +1,13 @@
 class BurrowsWheelerTransform
   def encode(bytes)
-    matrix = bytes
+    length = bytes.size - 1
+    sorted = bytes
       .size
       .times
-      .inject([]) { |r, i| r << bytes.rotate(0-i) }
+      .to_a
+      .sort { |i, j| (bytes*2)[i..i+length] <=> (bytes*2)[j..j+length] }
 
-    [matrix.sort.map(&:last), matrix.sort.find_index(bytes)]
+    [sorted.map { |i| (bytes*2)[i+length] }, sorted.find_index(0)]
   end
 
   def decode(bytes, n)
