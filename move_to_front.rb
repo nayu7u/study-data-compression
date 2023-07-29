@@ -1,28 +1,28 @@
 class MoveToFront
-  def encode(data)
-    symbol_list = data.bytes.uniq
-    symbol_list_clone = symbol_list.dup
-    encoded = []
+  def encode(byte_array)
+    symbol_list = 256.times.to_a
+    index_array = []
 
-    data.each_byte do |b|
-      encoded << symbol_list.find_index(b)
+    byte_array.each do |b|
+      index_array << symbol_list.find_index(b)
       symbol_list.delete(b)
       symbol_list.insert(0, b)
     end
 
-    [symbol_list_clone, encoded]
+    index_array
   end
 
-  def decode(symbol_list, encoded)
-    decoded = ""
+  def decode(index_array)
+    symbol_list = 256.times.to_a
+    byte_array = []
 
-    encoded.each do |index|
+    index_array.each do |index|
       byte = symbol_list[index]
-      decoded << byte
+      byte_array << byte
       symbol_list.delete(byte)
       symbol_list.insert(0, byte)
     end
 
-    decoded
+    byte_array
   end
 end

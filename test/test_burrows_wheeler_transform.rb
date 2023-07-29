@@ -8,19 +8,19 @@ class BurrowsWheelerTransformTest < Minitest::Test
   end
 
   def test_encode
-    assert_equal ["ccoaa", 2], @bwt.encode("cacao")
+    assert_equal ["ccoaa".bytes, 2], @bwt.encode("cacao".bytes)
   end
 
   def test_decode
-    assert_equal "cacao", @bwt.decode("ccoaa", 2)
+    assert_equal "cacao".bytes, @bwt.decode("ccoaa".bytes, 2)
   end
 
   def test_encode_decode
-    assert_equal "Hello, world!", @bwt.decode(*@bwt.encode("Hello, world!"))
+    assert_equal "Hello, world!".bytes, @bwt.decode(*@bwt.encode("Hello, world!".bytes))
   end
 
   def test_binary_encode_decode
-    random_bytes = SecureRandom.random_bytes(100)
+    random_bytes = SecureRandom.random_bytes(100).bytes
     assert_equal random_bytes, @bwt.decode(*@bwt.encode(random_bytes))
   end
 end
