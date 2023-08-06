@@ -25,4 +25,24 @@ class RunLengthEncodingTest < Minitest::Test
   def test_encode5
     assert_equal [255, 0, 255, 1], @rle.encode([254, 255])
   end
+
+  def test_decode1
+    assert_equal [0], @rle.decode([0])
+  end
+
+  def test_decode2
+    assert_equal [0, 0], @rle.decode([1])
+  end
+
+  def test_decode3
+    assert_equal [0, 0, 0], @rle.decode([0, 0])
+  end
+
+  def test_decode4
+    assert_equal [1, 2, 3], @rle.decode([2, 3, 4])
+  end
+
+  def test_decode5
+    assert_equal [254, 255], @rle.decode([255, 0, 255, 1])
+  end
 end
