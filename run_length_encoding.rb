@@ -1,43 +1,39 @@
 # zero run length encoding
 class RunLengthEncoding
   def encode(array)
+    c = array.shift
     encoded = []
-    zero_count = 0
-    array.each do |n|
-      if zero_count.positive?
-        if n.zero?
-          zero_count += 1 
-        else
-          encoded.concat([0, zero_count, n])
-          zero_count = 0
+    count = 0
+    while !c.nil? do
+      if c.zero?
+        count = 0
+        while !c.nil? && c.zero?
+          count += 1
+          c = array.shift
+        end
+        count += 1
+        while count != 1
+          encoded << (count & 1)
+          count >>= 1
         end
       else
-        if n.zero?
-          zero_count += 1
+        if c.to_s(16) == "fe"
+          encoded << (255)
+          encoded << (0)
+        elsif c.to_s(16) == "ff"
+          encoded << (255)
+          encoded << (1)
         else
-          encoded << n
+          encoded << c + 1
         end
+
+        c = array.shift
       end
     end
-    encoded.concat([0, zero_count]) if zero_count.positive?
+
     encoded
   end
 
   def decode(array)
-    decoded = []
-    zero_flag = false
-    array.each do |n|
-      if zero_flag
-        decoded.concat([0]*n)
-        zero_flag = false
-      else
-        if n.zero?
-          zero_flag = true
-        else
-          decoded << n
-        end
-      end
-    end
-    decoded
   end
 end
