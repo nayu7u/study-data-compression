@@ -1,6 +1,7 @@
 # zero run length encoding
 class RunLengthEncoding
-  def encode(array)
+  def encode(org_array)
+    array = org_array.dup
     c = array.shift
     encoded = []
     count = 0
@@ -34,7 +35,8 @@ class RunLengthEncoding
     encoded
   end
 
-  def decode(array)
+  def decode(org_array)
+    array = org_array.dup
     c = array.shift
     decoded = []
     buff = []
@@ -45,11 +47,15 @@ class RunLengthEncoding
         buff << c
         loop do
           c = array.shift
-          break if c.nil? || c > 1
+          if c.nil? || c > 1
+            array.unshift(c)
+            break 
+          end
           buff << c
         end
         num_of_zeros = ([1] + buff).join("").to_i(2) - 1
         decoded.concat([0] * num_of_zeros)
+        buff = []
       else
         if c == 255
           c = array.shift
