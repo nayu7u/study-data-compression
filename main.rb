@@ -14,11 +14,18 @@ class Main
   def encode(bytes)
     bwt_encoed, index = @bwt.encode(bytes)
     mtf_encoded = @mtf.encode(bwt_encoed)
-    [index, mtf_encoded]
+    rle_encoded = @rle.encode(mtf_encoded)
+    hex_index = index.to_s(16).split("")
+    size = hex_index.size
+    [size, *hex_index, *rle_encoded]
   end
 
   def decode(bytes)
-    index, mtf_encoded = bytes
+    size, *mixed = bytes
+    hex_index = mixed[0..(size - 1)]
+    index = hex_index.join("").hex
+    rle_encoded = mixed[size..]
+    mtf_encoded = @rle.decode(rle_encoded)
     bwt_encoded = @mtf.decode(mtf_encoded)
     bytes = @bwt.decode(bwt_encoded, index)
   end

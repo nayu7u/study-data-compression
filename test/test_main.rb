@@ -7,8 +7,13 @@ class MainTest < Minitest::Test
     @main = Main.new
   end
 
-  def test_encode_decode
-    random_bytes = SecureRandom.random_bytes(100).bytes
+  def test_random_encode_decode
+    random_bytes = SecureRandom.random_bytes(10000).bytes
     assert_equal random_bytes, @main.decode(@main.encode(random_bytes))
+  end
+
+  def test_simple_encode_decode
+    bytes = [1, 1, 1, 0, 0, 0]
+    assert_equal bytes, @main.decode(@main.encode(bytes))
   end
 end
