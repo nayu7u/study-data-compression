@@ -1,0 +1,17 @@
+#!/usr/bin/env ruby
+require "./main"
+
+unless ARGV.size == 1
+  puts "This command requires 1 arguments."
+end
+
+source_path = ARGV[0]
+main = Main.new(true)
+main.encode_from_file(source_path, "encoded_debug_file")
+main.decode_from_file("encoded_debug_file", "decoded_debug_file")
+
+result = `cmp #{source_path} decoded_debug_file`
+puts result
+puts main.debug_data unless result == ""
+puts `ls -l #{source_path}`
+puts `ls -l encoded_debug_file`
