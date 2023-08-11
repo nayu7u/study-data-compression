@@ -12,10 +12,10 @@ class Main
   end
 
   def encode(bytes)
-    bwt_encoed, index = @bwt.encode(bytes)
-    mtf_encoded = @mtf.encode(bwt_encoed)
+    bwt_encoded, index = @bwt.encode(bytes)
+    mtf_encoded = @mtf.encode(bwt_encoded)
     rle_encoded = @rle.encode(mtf_encoded)
-    hex_index = index.to_s(16).split("")
+    hex_index = index.to_s(16).split("").map(&:hex)
     size = hex_index.size
     [size, *hex_index, *rle_encoded]
   end
@@ -23,7 +23,7 @@ class Main
   def decode(bytes)
     size, *mixed = bytes
     hex_index = mixed[0..(size - 1)]
-    index = hex_index.join("").hex
+    index = hex_index.map { _1.to_s(16) }.join.hex
     rle_encoded = mixed[size..]
     mtf_encoded = @rle.decode(rle_encoded)
     bwt_encoded = @mtf.decode(mtf_encoded)
@@ -39,7 +39,7 @@ class Main
   def decode_from_file(encoded_path, decoded_path)
     bytes = File.open(encoded_path, "rb") { _1.read.bytes }
     decoded = decode(bytes)
-    File.open(encoded_path, "wb") { |f| decoded.each{ f.putc(_1) } }
+    File.open(decoded_path, "wb") { |f| decoded.each{ f.putc(_1) } }
   end
 end
 
