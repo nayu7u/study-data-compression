@@ -1,0 +1,9 @@
+#!/usr/bin/env ruby
+require "./main"
+
+unless ARGV.size == 2
+  puts "This command requires 2 arguments."
+end
+
+source_path, decoded_path = ARGV
+Main.new.decode_from_file(source_path, decoded_path)

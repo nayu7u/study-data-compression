@@ -1,43 +1,74 @@
 # zero run length encoding
 class RunLengthEncoding
-  def encode(array)
+  def encode(org_array)
+    array = org_array.dup
+    c = array.shift
     encoded = []
-    zero_count = 0
-    array.each do |n|
-      if zero_count.positive?
-        if n.zero?
-          zero_count += 1 
-        else
-          encoded.concat([0, zero_count, n])
-          zero_count = 0
+    count = 0
+    while !c.nil? do
+      if c.zero?
+        count = 0
+        while !c.nil? && c.zero?
+          count += 1
+          c = array.shift
         end
+        count += 1
+        encoded.concat(count.to_s(2).split("").map(&:to_i)[1..])
       else
-        if n.zero?
-          zero_count += 1
+        if c.to_s(16) == "fe"
+          encoded << (255)
+          encoded << (0)
+        elsif c.to_s(16) == "ff"
+          encoded << (255)
+          encoded << (1)
         else
-          encoded << n
+          encoded << c + 1
         end
+
+        c = array.shift
       end
     end
-    encoded.concat([0, zero_count]) if zero_count.positive?
+
     encoded
   end
 
-  def decode(array)
+  def decode(org_array)
+    array = org_array.dup
+    c = array.shift
     decoded = []
-    zero_flag = false
-    array.each do |n|
-      if zero_flag
-        decoded.concat([0]*n)
-        zero_flag = false
+    buff = []
+    count = 0
+    while !c.nil? do
+      if c <= 1
+        count = 1
+        buff << c
+        loop do
+          c = array.shift
+          if c.nil? || c > 1
+            array.unshift(c)
+            break 
+          end
+          buff << c
+        end
+        num_of_zeros = ([1] + buff).join("").to_i(2) - 1
+        decoded.concat([0] * num_of_zeros)
+        buff = []
       else
-        if n.zero?
-          zero_flag = true
+        if c == 255
+          c = array.shift
+          if c.zero?
+            decoded << 254
+          else
+            decoded << 255
+          end
         else
-          decoded << n
+          decoded << c - 1
         end
       end
+
+      c = array.shift
     end
+
     decoded
   end
 end
