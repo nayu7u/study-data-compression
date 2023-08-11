@@ -1,13 +1,10 @@
+require_relative "suffix_array"
+
 class BurrowsWheelerTransform
   def encode(bytes)
-    length = bytes.size - 1
-    sorted = bytes
-      .size
-      .times
-      .to_a
-      .sort { |i, j| (bytes*2)[i..i+length] <=> (bytes*2)[j..j+length] }
+    sa = SuffixArray.new(bytes)
 
-    [sorted.map { |i| (bytes*2)[i+length] }, sorted.find_index(0)]
+    [sa.last_column, sa.bwt_index]
   end
 
   def decode(bytes, n)
