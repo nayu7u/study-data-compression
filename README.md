@@ -13,15 +13,34 @@ bzip2の圧縮処理には以下の要素が用いられている。
 
 これらを用いて実装する。
 
-## メモ
+## 実行
 
 Docker内で実行する場合
 
 ```bash
 docker compose up -d
-docker compose exec ruby /bin/bash
 
 # 圧縮
-docker compose exec ruby ./compress source_path destination_path
-docker compose exec ruby ./decompress source_path destination_path
+docker compose exec ruby bin/compress source_path destination_path
+
+# 解凍
+docker compose exec ruby bin/decompress source_path destination_path
 ```
+
+## メモ
+
+デバッグ用などのメモ
+
+```bash
+docker compose up -d
+
+# コンテナ内shell
+docker compose exec ruby /bin/bash
+
+# テスト
+docker compose exec ruby rake
+
+# 圧縮解凍デバッグ
+docker compose exec ruby bin/debug 圧縮デバッグ対象パス
+```
+

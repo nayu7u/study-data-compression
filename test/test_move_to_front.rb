@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "../move_to_front.rb"
+require_relative "../lib/move_to_front.rb"
 require "securerandom"
 
 class MoveToFrontTest < Minitest::Test

@@ -1,7 +1,7 @@
-require "./burrows_wheeler_transform"
-require "./move_to_front"
-require "./run_length_encoding"
-require "./huffman_coding"
+require_relative "burrows_wheeler_transform"
+require_relative "move_to_front"
+require_relative "run_length_encoding"
+require_relative "huffman_coding"
 
 class Main
   attr_accessor :debug_data
