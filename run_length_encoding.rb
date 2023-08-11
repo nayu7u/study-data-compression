@@ -13,10 +13,7 @@ class RunLengthEncoding
           c = array.shift
         end
         count += 1
-        while count != 1
-          encoded << (count & 1)
-          count >>= 1
-        end
+        encoded.concat(count.to_s(2).split("").map(&:to_i)[1..])
       else
         if c.to_s(16) == "fe"
           encoded << (255)
