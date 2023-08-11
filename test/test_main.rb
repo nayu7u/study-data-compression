@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "../main.rb"
+require_relative "../lib/main.rb"
 require "securerandom"
 
 class MainTest < Minitest::Test

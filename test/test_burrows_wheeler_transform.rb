@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "../burrows_wheeler_transform.rb"
+require_relative "../lib/burrows_wheeler_transform.rb"
 require "securerandom"
 
 class BurrowsWheelerTransformTest < Minitest::Test

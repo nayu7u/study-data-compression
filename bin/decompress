@@ -1,5 +1,5 @@
 #!/usr/bin/env ruby
-require "./main"
+require_relative "../lib/main"
 
 unless ARGV.size == 2
   puts "This command requires 2 arguments."

@@ -1,5 +1,5 @@
 require "minitest/autorun"
-require_relative "../run_length_encoding.rb"
+require_relative "../lib/run_length_encoding.rb"
 
 class RunLengthEncodingTest < Minitest::Test
   def setup
