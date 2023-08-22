@@ -8,7 +8,7 @@ class SuffixArrayTest < Minitest::Test
   end
 
   def test_sort
-    assert_equal "ardrcaaaabb".bytes.pack("c*"), @sa.last_column.pack("c*")
+    assert_equal "rdarcaaaabb".bytes.pack("c*"), @sa.last_column.pack("c*")
   end
 
   # def test_last_column

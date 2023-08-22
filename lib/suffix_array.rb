@@ -1,29 +1,25 @@
 class SuffixArray
   def initialize(bytes)
-    @bytes = bytes
+    @bytes = bytes.dup
     @length = @bytes.size
-    @sorted = sort
-    p @sorted
-    @sorted.each { p _1; p ((@bytes + [nil])*2)[_1..(_1+@sorted.length)].compact.pack("c*") }
-    @sorted.reject! { _1 == @length }
-    p @sorted
-    p "="*100
+    @sorted = sort[1..]
+    @index = @sorted.find_index(0)
+    @sorted.delete_at(@index)
+    @sorted.insert(@index, @bytes.last)
   end
 
   def last_column
-    # @sorted.map { |i| @bytes[i - 1] }.reject! { _1 == -1 }
-    @sorted.map { |i| @bytes[i - 1] }.tap{p _1}
+    @sorted.map { |i| @bytes[i - 1] }
   end
 
   def bwt_index
-    # @sorted.find_index(0)
-    @sorted.find_index(0).tap{p _1}
+    @index
   end
 
   def sort
     sa = @length.times.to_a
     # rankの初期値はbyte値とする
-    rank = @bytes
+    rank = @bytes.dup
 
     # 末尾番兵を用意
     sa << sa.last + 1
