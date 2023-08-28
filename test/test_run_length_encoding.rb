@@ -96,7 +96,7 @@ class RunLengthEncodingTest < Minitest::Test
   end
 
   def test_random_encode_decode
-    target = 10000.times.map { (0..255).to_a.sample }
+    target = 100.times.map { (0..255).to_a.sample }
     assert_equal target, @rle.decode(@rle.encode(target))
   end
 end

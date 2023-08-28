@@ -2,14 +2,12 @@ class SuffixArray
   def initialize(bytes)
     @bytes = bytes.dup
     @length = @bytes.size
-    @sorted = sort[1..]
+    @sorted = sort
     @index = @sorted.find_index(0)
-    @sorted.delete_at(@index)
-    @sorted.insert(@index, @bytes.last)
   end
 
   def last_column
-    @sorted.map { |i| @bytes[i - 1] }
+    @sorted.reject { _1 == 0 }.map { |i| @bytes[i - 1] }
   end
 
   def bwt_index
@@ -46,6 +44,8 @@ class SuffixArray
       rank = tmp
 
       k *= 2
+      p k
+      p @length
     end
 
     sa

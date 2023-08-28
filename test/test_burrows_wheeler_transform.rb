@@ -20,7 +20,7 @@ class BurrowsWheelerTransformTest < Minitest::Test
   end
 
   def test_binary_encode_decode
-    random_bytes = SecureRandom.random_bytes(100).bytes
+    random_bytes = SecureRandom.random_bytes(10000).bytes
     assert_equal random_bytes, @bwt.decode(*@bwt.encode(random_bytes))
   end
 end

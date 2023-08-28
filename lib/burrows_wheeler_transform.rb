@@ -3,11 +3,14 @@ require_relative "suffix_array"
 class BurrowsWheelerTransform
   def encode(bytes)
     sa = SuffixArray.new(bytes)
+    bwt_index = sa.bwt_index
+    last_column = sa.last_column
 
-    [sa.last_column, sa.bwt_index]
+    [last_column, bwt_index]
   end
 
   def decode(bytes, n)
+    bytes.insert(n, -1)
     sorted = bytes.sort
     indices = bytes.size.times.map(&:to_i)
     ziped = bytes.zip(sorted, indices)
@@ -21,7 +24,7 @@ class BurrowsWheelerTransform
       index = target
     }
 
-    decoded
+    decoded.reject! { _1 == -1 }
   end
 end
 
