@@ -8,7 +8,7 @@ class SuffixArrayTest < Minitest::Test
   end
 
   def test_last_column
-    assert_equal "rdarcaaaabb".bytes, @sa.last_column
+    assert_equal "ardrcaaaabb".bytes, @sa.last_column
   end
 
   def test_bwt_index

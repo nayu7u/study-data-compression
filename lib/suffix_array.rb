@@ -23,15 +23,10 @@ class SuffixArray
     sa << sa.last + 1
     rank << -1
 
-    # sa.each { p _1; p ((@bytes + [nil])*2)[_1..(_1+sa.length)].compact.pack("c*") }
-    # p "=" * 100
-
     k = 1
     while k <= @length
       # 2kずつsort
       sa.sort! { |sa_i, sa_j| compare(sa_i, sa_j, k, rank) }
-      # sa.each { p _1; p ((@bytes + [nil])*2)[_1..(_1+sa.length)].compact.pack("c*") }
-      # p "=" * 100
       
       # rank算出
       tmp = Array.new(sa.size)
@@ -44,8 +39,6 @@ class SuffixArray
       rank = tmp
 
       k *= 2
-      p k
-      p @length
     end
 
     sa
