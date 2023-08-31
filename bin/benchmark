@@ -1,0 +1,26 @@
+#!/bin/bash
+
+target_file=$1
+
+echo "Compress file $target_file to $target_file.compressed..."
+time docker compose exec ruby bin/compress $target_file $target_file.compressed
+
+echo
+
+echo "Decompress file $target_file.compressed to $target_file.decompressed..."
+time docker compose exec ruby bin/decompress $target_file.compressed $target_file.decompressed
+
+echo
+if [[ $(md5sum - < $target_file) == $(md5sum - < $target_file.decompressed) ]]; then
+    echo "The decompressed file is **the same** as the original file"
+else
+    echo "The decompressed file is **different** from the original file"
+fi
+echo
+
+# compression ratio
+ls -l $target_file{,.compressed,.decompressed}
+
+echo
+echo -n "Compression ratio: "
+echo "scale=2; $(wc -c < $target_file.compressed) * 100 / $(wc -c < $target_file)" | bc -l
