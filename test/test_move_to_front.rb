@@ -16,7 +16,7 @@ class MoveToFrontTest < Minitest::Test
   end
 
   def test_encode_decode
-    random_bytes = SecureRandom.random_bytes(100).bytes
+    random_bytes = SecureRandom.random_bytes(10000).bytes
     assert_equal random_bytes, @mtf.decode(@mtf.encode(random_bytes))
   end
 end
